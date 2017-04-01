@@ -41,6 +41,15 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         Route::group(['prefix' => 'books', 'namespace' => 'Books'], function () {
             Route::get('', 'BooksController@index')->name('admin.books.index');
         });
+
+        Route::group(['prefis' => 'admins', 'namespace' => 'Admins'], function () {
+            Route::get('', 'AdminsController@index')->name('admin.admins.index');
+            Route::group(['prefix' => '{id}'], function () {
+                Route::get('/edit', 'AdminsController@edit')->name('admin.admins.edit');
+                Route::post('/update', 'AdminsController@update')->name('admin.admins.update');
+                Route::get('/delete', 'AdminsController@destroy')->name('admin.admins.delete');
+            });
+        });
     });
 
 });

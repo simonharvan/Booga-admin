@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\Admin\Books;
 
 use App\Http\Controllers\Admin\Controller;
-use App\Models\Book\Book;
+use App\Models\Book\BookType;
 
 class BooksController extends Controller
 {
@@ -12,7 +12,7 @@ class BooksController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
+        $books = BookType::all();
 
         return view('pages.books.index', [
             'books' => $books
@@ -46,7 +46,7 @@ class BooksController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $book)
+    public function show(BookType $book)
     {
         //
     }
@@ -57,7 +57,7 @@ class BooksController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function edit(Book $book)
+    public function edit(BookType $book)
     {
         //
     }
@@ -69,7 +69,7 @@ class BooksController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Book $book)
+    public function update(Request $request, BookType $book)
     {
         //
     }
@@ -80,7 +80,7 @@ class BooksController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Book $book)
+    public function destroy(BookType $book)
     {
         //
     }
