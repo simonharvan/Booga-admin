@@ -42,8 +42,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::get('', 'BooksController@index')->name('admin.books.index');
         });
 
-        Route::group(['prefis' => 'admins', 'namespace' => 'Admins'], function () {
+        Route::group(['prefix' => 'admins', 'namespace' => 'Admins'], function () {
             Route::get('', 'AdminsController@index')->name('admin.admins.index');
+            Route::get('/create', 'AdminsController@create')->name('admin.admins.create');
+            Route::post('/create', 'AdminsController@add')->name('admin.admins.create');
             Route::group(['prefix' => '{id}'], function () {
                 Route::get('/edit', 'AdminsController@edit')->name('admin.admins.edit');
                 Route::post('/update', 'AdminsController@update')->name('admin.admins.update');

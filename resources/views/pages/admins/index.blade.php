@@ -13,10 +13,13 @@
 @section('content')
     <div class="box">
         <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
+
+            <a class="btn btn-success pull-right margin" href="{{ route('admin.admins.create') }}">Add admin</a>
+
+            <table id="example1" class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
-                    <th>Name</th>
+                    <th><a href="{{ route('admin.admins.index', ['filter' => 'name']) }}">Name</a></th>
                     <th>Email</th>
                     <th>Points</th>
                     <th></th>
@@ -29,12 +32,18 @@
                         <td>{{ $admin->name }}</td>
                         <td>{{ $admin->email }}</td>
                         <td>{{ $admin->points }}</td>
-                        <td><a type="button" class="btn btn-primary" href="{{ route('admin.admins.edit', ['id' => $admin->id]) }}">Edit</a></td>
-                        <td><a type="button" class="btn btn-danger" href="{{ route('admin.admins.delete', ['id' => $admin->id]) }}">Delete</a></td>
+                        <td class="actions"><a type="button" class="btn-sm btn-primary"
+                                               href="{{ route('admin.admins.edit', ['id' => $admin->id]) }}">Edit</a>
+                            <a type="button" class="btn-sm btn-danger"
+                               href="{{ route('admin.admins.delete', ['id' => $admin->id]) }}">Delete</a></td>
+
                     </tr>
                 @endforeach
                 </tbody>
             </table>
+            <div class="pull-right">
+                {{ $admins->links() }}
+            </div>
         </div>
     </div>
 @endsection

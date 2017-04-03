@@ -1,5 +1,6 @@
 <?php namespace App\Models\Admin;
 
+use App\Models\AdminLog\AdminLog;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -15,8 +16,8 @@ class Admin extends Authenticatable
     /*
      * Relations
      */
-    public function books()
+    public function logs()
     {
-
+        return $this->hasMany(AdminLog::class);
     }
 }
