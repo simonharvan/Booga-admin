@@ -17,10 +17,16 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- CSRF Token -->
+    <meta name="_token" content="{{ csrf_token() }}">
 </head>
 <body class="hold-transition skin-black sidebar-mini">
 @yield('core_content')
 
 <script src="{{ asset('js/app.js') }}"></script>
+<script>
+    App.MainView = new MainView();
+</script>
+@yield('scripts')
 </body>
 </html>

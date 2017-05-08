@@ -4,43 +4,35 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="{{ auth()->user()->avatarUrl }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p>{{ auth()->user()->name }}</p>
+                <p>{{ auth()->user()->points }} points</p>
             </div>
         </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="{{ isActiveRoute('admin.dashboard.index') }} treeview">
+            <li class="{{ isActiveRoute('admin.dashboard.index') }}">
                 <a href="{{ route('admin.dashboard.index') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
-            <li class="treeview">
+            <li class="{{ isActiveRoute('admin.books.index') }}">
                 <a href="{{ route('admin.books.index') }}">
                     <i class="fa fa-book"></i>
                     <span>Books</span>
                 </a>
             </li>
-            <li>
+            <li class="{{ isActiveRoute('admin.admins.index') }}">
                 <a href="{{ route('admin.admins.index') }}">
                     <i class="fa fa-user"></i>
                     <span>Admins</span>
                 </a>
             </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-pie-chart"></i>
-                    <span>Charts</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+            <li class="{{ isActiveRoute('admin.libraries.index') }}">
+                <a href="{{ route('admin.libraries.index') }}">
+                    <i class="fa fa-building"></i>
+                    <span>Libraries</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                    <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-                    <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-                    <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-                </ul>
             </li>
             <li class="treeview">
                 <a href="#">

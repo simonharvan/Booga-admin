@@ -17,37 +17,43 @@
         <div class="box-body">
             <form action="{{ route('admin.admins.update', $admin->id) }}" method="post">
                 {{ csrf_field() }}
-                <div class="row">
-                    <div class="col-xs-4 mb10 @include('layout.components.validation_color', ['name' => 'name'])">
+                <div class="col-xs-6">
+                    <div class="col-xs-12 @include('layout.components.validation_color', ['name' => 'name'])">
                         <label>Name</label>
                         <input class="form-control" type="text"
-                               value="{{ old('name', $admin->name }}"
+                               value="{{ old('name', $admin->name) }}"
                                placeholder="Enter name" name="name">
                         @include('layout.components.validation_error', ['name' => 'name'])
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4 mb10 @include('layout.components.validation_color', ['name' => 'email'])">
+                    <div class="col-xs-12 @include('layout.components.validation_color', ['name' => 'email'])">
                         <label>Email</label>
                         <input class="form-control" type="text" placeholder="Enter email" name="email"
-                               value="{{ $admin->email }}">
+                               value="{{ old('email',$admin->email) }}">
                         @include('layout.components.validation_error', ['name' => 'email'])
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4 mb10 @include('layout.components.validation_color', ['name' => 'password'])">
+                    <div class="col-xs-12 @include('layout.components.validation_color', ['name' => 'password'])">
                         <label>Password</label>
                         <input class="form-control" type="password" placeholder="Enter password" name="password"
                                value="">
                         @include('layout.components.validation_error', ['name' => 'password'])
                     </div>
                 </div>
+                <div class="col-xs-6">
+                    <div class="col-xs-12 row">
+                        <label for="profile_photo">Profile photo</label>
+                        <input class="form-control" type="file" id="profile_photo" name="profile_photo">
+                    </div>
+
+                    <div class="col-xs-12">
+                        <img class="col-xs-6 col-xs-offset-3" src="{{ $admin->getImageUrl('thumb') }}">
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <button type="submit" class="btn btn-success btn-quirk"><i class="fa fa-save"></i> Save
+                        <button type="submit" class="btn btn-success btn-quirk pull-right"><i class="fa fa-save"></i> Save
                         </button>
                         <a href="{{ route('admin.admins.edit', $admin->id) }}"
-                           class="btn btn-quirk btn-danger pull-right confirm"
+                           class="btn btn-quirk btn-danger confirm"
                            data-confirm="Do you really want to delete this download item? This action cannot be undone."><i
                                     class="fa fa-trash"></i> Delete</a>
                     </div>

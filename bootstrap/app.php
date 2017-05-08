@@ -52,4 +52,6 @@ $app->singleton(
 |
 */
 
+ini_set('xdebug.max_nesting_level', 2000);
+
 return $app;

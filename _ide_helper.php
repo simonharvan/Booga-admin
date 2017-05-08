@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.16 on 2017-04-03.
+ * Generated for Laravel 5.4.17 on 2017-04-05.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -101,56 +101,61 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the path to the application "app" directory.
          *
+         * @param string $path Optionally, a path to append to the app path
          * @return string 
          * @static 
          */
-        public static function path()
+        public static function path($path = '')
         {
-            return \Illuminate\Foundation\Application::path();
+            return \Illuminate\Foundation\Application::path($path);
         }
         
         /**
          * Get the base path of the Laravel installation.
          *
+         * @param string $path Optionally, a path to append to the base path
          * @return string 
          * @static 
          */
-        public static function basePath()
+        public static function basePath($path = '')
         {
-            return \Illuminate\Foundation\Application::basePath();
+            return \Illuminate\Foundation\Application::basePath($path);
         }
         
         /**
          * Get the path to the bootstrap directory.
          *
+         * @param string $path Optionally, a path to append to the bootstrap path
          * @return string 
          * @static 
          */
-        public static function bootstrapPath()
+        public static function bootstrapPath($path = '')
         {
-            return \Illuminate\Foundation\Application::bootstrapPath();
+            return \Illuminate\Foundation\Application::bootstrapPath($path);
         }
         
         /**
          * Get the path to the application configuration files.
          *
+         * @param string $path Optionally, a path to append to the config path
          * @return string 
          * @static 
          */
-        public static function configPath()
+        public static function configPath($path = '')
         {
-            return \Illuminate\Foundation\Application::configPath();
+            return \Illuminate\Foundation\Application::configPath($path);
         }
         
         /**
          * Get the path to the database directory.
          *
+         * @param string $path Optionally, a path to append to the database path
          * @return string 
          * @static 
          */
-        public static function databasePath()
+        public static function databasePath($path = '')
         {
-            return \Illuminate\Foundation\Application::databasePath();
+            return \Illuminate\Foundation\Application::databasePath($path);
         }
         
         /**
@@ -213,12 +218,13 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the path to the resources directory.
          *
+         * @param string $path
          * @return string 
          * @static 
          */
-        public static function resourcePath()
+        public static function resourcePath($path = '')
         {
-            return \Illuminate\Foundation\Application::resourcePath();
+            return \Illuminate\Foundation\Application::resourcePath($path);
         }
         
         /**
@@ -9288,7 +9294,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Checks if an a key is present and not null.
+         * Checks if a key is present and not null.
          *
          * @param string|array $key
          * @return bool 
@@ -11256,7 +11262,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get an instance of the last loop in the stack.
          *
-         * @return \StdClass|null 
+         * @return \stdClass|null 
          * @static 
          */
         public static function getLastLoop()
@@ -11370,6 +11376,186 @@ namespace Illuminate\Support\Facades {
         public static function renderTranslation()
         {
             return \Illuminate\View\Factory::renderTranslation();
+        }
+        
+    }         
+}
+    
+namespace Medlib\Yaz\Facades {
+
+    class Yaz {
+        
+        /**
+         * 
+         *
+         * @return \Medlib\Yaz\Query\YazQuery 
+         * @static 
+         */
+        public static function create()
+        {
+            return \Medlib\Yaz\Query\YazQuery::create();
+        }
+        
+        /**
+         * Set the source which the query is targeting.
+         *
+         * @param string $source
+         * @return \Medlib\Yaz\Query\QueryFrom 
+         * @static 
+         */
+        public static function from($source)
+        {
+            //Method inherited from \Medlib\Yaz\Factory\YazFactory            
+            return \Medlib\Yaz\Query\YazQuery::from($source);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function where($query)
+        {
+            //Method inherited from \Medlib\Yaz\Factory\YazFactory            
+            return \Medlib\Yaz\Query\YazQuery::where($query);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function orderBy($order)
+        {
+            //Method inherited from \Medlib\Yaz\Factory\YazFactory            
+            return \Medlib\Yaz\Query\YazQuery::orderBy($order);
+        }
+        
+        /**
+         * Limit the query offset
+         *
+         * @param $start
+         * @param $end
+         * @return \Medlib\Yaz\Factory\QueryLimit 
+         * @static 
+         */
+        public static function limit($start, $end)
+        {
+            //Method inherited from \Medlib\Yaz\Factory\YazFactory            
+            return \Medlib\Yaz\Query\YazQuery::limit($start, $end);
+        }
+        
+        /**
+         * Return all result
+         *
+         * @param null $RecordsMode
+         * @param string $syntaxMode
+         * @return \Medlib\Yaz\Factory\YazRecords 
+         * @static 
+         */
+        public static function all($RecordsMode = null, $syntaxMode = 'marc21')
+        {
+            //Method inherited from \Medlib\Yaz\Factory\YazFactory            
+            return \Medlib\Yaz\Query\YazQuery::all($RecordsMode, $syntaxMode);
+        }
+        
+        /**
+         * Return the first result
+         *
+         * @param null $RecordsMode
+         * @param string $syntaxMode
+         * @return \Medlib\Yaz\Factory\YazRecords 
+         * @static 
+         */
+        public static function first($RecordsMode = null, $syntaxMode = 'marc21')
+        {
+            //Method inherited from \Medlib\Yaz\Factory\YazFactory            
+            return \Medlib\Yaz\Query\YazQuery::first($RecordsMode, $syntaxMode);
+        }
+        
+        /**
+         * Return the user query
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getBaseRequest()
+        {
+            //Method inherited from \Medlib\Yaz\Factory\YazFactory            
+            return \Medlib\Yaz\Query\YazQuery::getBaseRequest();
+        }
+        
+        /**
+         * 
+         *
+         * @return void 
+         * @static 
+         */
+        public static function close()
+        {
+            //Method inherited from \Medlib\Yaz\Factory\YazFactory            
+            \Medlib\Yaz\Query\YazQuery::close();
+        }
+        
+    }         
+
+    class Query {
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function create()
+        {
+            return \Medlib\Yaz\Parser\ParseQuery::create();
+        }
+        
+        /**
+         * 
+         *
+         * @param \Request $request
+         * @return \Medlib\Yaz\Factory\SimpleQuery 
+         * @static 
+         */
+        public static function simple($request)
+        {
+            //Method inherited from \Medlib\Yaz\Factory\ParseFactory            
+            return \Medlib\Yaz\Parser\ParseQuery::simple($request);
+        }
+        
+        /**
+         * 
+         *
+         * @param \Request $request
+         * @return \Medlib\Yaz\Factory\AdvancedQuery 
+         * @static 
+         */
+        public static function advanced($request)
+        {
+            //Method inherited from \Medlib\Yaz\Factory\ParseFactory            
+            return \Medlib\Yaz\Parser\ParseQuery::advanced($request);
+        }
+        
+    }         
+}
+    
+namespace Medlib\MarcXML\Facades {
+
+    class MarcXML {
+        
+        /**
+         * 
+         *
+         * @param \Medlib\MarcXML\Parser\QuiteSimpleXmlElement|\SimpleXmlElement $record
+         * @throws Exception
+         * @throws InvalidParserException
+         * @return \Medlib\MarcXML\Records\Record 
+         * @static 
+         */
+        public static function parse($record)
+        {
+            return \Medlib\MarcXML\Parser\Parser::parse($record);
         }
         
     }         
@@ -11560,7 +11746,7 @@ namespace {
          *
          * @param mixed $id
          * @param array $columns
-         * @return mixed 
+         * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static|null 
          * @static 
          */
         public static function find($id, $columns = array())
@@ -13400,6 +13586,12 @@ namespace {
             return \Illuminate\Database\Query\Builder::macroCall($method, $parameters);
         }
         }
+    
+    class Yaz extends \Medlib\Yaz\Facades\Yaz {}
+    
+    class Query extends \Medlib\Yaz\Facades\Query {}
+    
+    class MarcXML extends \Medlib\MarcXML\Facades\MarcXML {}
     
 }
 

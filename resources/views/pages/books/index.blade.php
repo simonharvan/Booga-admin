@@ -15,7 +15,7 @@
     <div class="box">
         <div class="box-body">
 
-            <a class="btn btn-success pull-right margin" href="{{ route('admin.admins.create') }}">Add admin</a>
+            <a class="btn btn-success pull-right margin" href="{{ route('admin.books.create') }}">Add book</a>
 
             <table id="example1" class="table table-bordered table-striped table-hover">
                 <thead>
@@ -32,22 +32,23 @@
                     <th>Time for clearing</th>
                     <th>Created at</th>
                     <th>Actions</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($books as $book)
                     <tr data-href="{{ route('admin.admins.edit', ['id' => $book->id]) }}">
-                        <th>{{ $book->id }}</th>
-                        <th>{{ $book->name }}</th>
-                        <th>{{ $book->author_name }}</th>
-                        <th>{{ $book->year_published }}</th>
-                        <th>{{ $book->isbn }}</th>
-                        <th><span class="{{ strtolower($book->state) }}">{{ $book->state }}</span></th>
-                        <th><a href="{{ $book->book_cover_url }}"><img src="{{ $book->book_cover_url }}" class="book_cover center-block"/></a></th>
-                        <th>{{ $book->generation_focus_level }}</th>
-                        <th>{{ $book->energy_for_clearing }}</th>
-                        <th>{{ $book->time_for_clearing }}</th>
-                        <th>{{ $book->created_at }}</th>
+                        <td>{{ $book->id }}</td>
+                        <td>{{ $book->name }}</td>
+                        <td>{{ $book->author_name }}</td>
+                        <td>{{ $book->year_published }}</td>
+                        <td>{{ $book->isbn }}</td>
+                        <td><span class="{{ strtolower($book->state) }}">{{ $book->state }}</span></td>
+                        <td><a href="{{ $book->book_cover_url }}"><img src="{{ $book->book_cover_url }}" class="table_image center-block"/></a></td>
+                        <td>{{ $book->generation_focus_level }}</td>
+                        <td>{{ $book->energy_for_clearing }}</td>
+                        <td>{{ $book->time_for_clearing }}</td>
+                        <td>{{ $book->created_at }}</td>
                         <td class="actions"><a type="button" class="btn-sm btn-primary"
                                href="{{ route('admin.admins.edit', ['id' => $book->id]) }}">Edit</a>
                         <a type="button" class="btn-sm btn-danger"

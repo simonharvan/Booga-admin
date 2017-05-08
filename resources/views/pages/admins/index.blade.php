@@ -19,19 +19,22 @@
             <table id="example1" class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
+                    <th>ID</th>
                     <th><a href="{{ route('admin.admins.index', ['filter' => 'name']) }}">Name</a></th>
                     <th>Email</th>
                     <th>Points</th>
-                    <th></th>
+                    <th>Profile photo</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($admins as $admin)
                     <tr data-href="{{ route('admin.admins.edit', ['id' => $admin->id]) }}">
+                        <td>{{ $admin->id }}</td>
                         <td>{{ $admin->name }}</td>
                         <td>{{ $admin->email }}</td>
                         <td>{{ $admin->points }}</td>
+                        <td><img src="{{ $admin->avatarUrl }}" class="table_image"></td>
                         <td class="actions"><a type="button" class="btn-sm btn-primary"
                                                href="{{ route('admin.admins.edit', ['id' => $admin->id]) }}">Edit</a>
                             <a type="button" class="btn-sm btn-danger"
