@@ -15,7 +15,7 @@
 @section('content')
     <div class="box">
         <div class="box-body">
-            <form action="{{ route('admin.admins.update', $admin->id) }}" method="post">
+            <form action="{{ route('admin.admins.update', $admin->id) }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="col-xs-6">
                     <div class="col-xs-12 @include('layout.components.validation_color', ['name' => 'name'])">
@@ -37,6 +37,15 @@
                                value="">
                         @include('layout.components.validation_error', ['name' => 'password'])
                     </div>
+                    <div class="col-xs-12 checkbox">
+                        <label>
+                            <input class="checkbox" type="checkbox" name="superadmin"
+                                   value="true"  @php
+                                if ($admin->superadmin) {
+                         echo "checked";
+                         } @endphp> Super admin
+                        </label>
+                    </div>
                 </div>
                 <div class="col-xs-6">
                     <div class="col-xs-12 row">
@@ -45,14 +54,14 @@
                     </div>
 
                     <div class="col-xs-12">
-                        <img class="col-xs-6 col-xs-offset-3" src="{{ $admin->getImageUrl('thumb') }}">
+                        <img class="col-xs-6 col-xs-offset-3" src="{{ $admin->avatarUrl }}">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
                         <button type="submit" class="btn btn-success btn-quirk pull-right"><i class="fa fa-save"></i> Save
                         </button>
-                        <a href="{{ route('admin.admins.edit', $admin->id) }}"
+                        <a href="{{ route('admin.admins.delete', $admin->id) }}"
                            class="btn btn-quirk btn-danger confirm"
                            data-confirm="Do you really want to delete this download item? This action cannot be undone."><i
                                     class="fa fa-trash"></i> Delete</a>

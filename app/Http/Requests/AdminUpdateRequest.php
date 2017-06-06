@@ -28,7 +28,9 @@ class AdminUpdateRequest extends FormRequest
         return [
             'name' => 'nullable',
             'email' => 'required|email',
-            'password' => 'nullable|min:5'
+            'password' => 'nullable|min:5',
+            'superadmin' => 'nullable',
+            'profile_photo' => 'nullable|image'
         ];
     }
 }

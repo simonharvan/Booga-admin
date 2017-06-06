@@ -1,5 +1,7 @@
 <?php namespace App\Models\Admin;
 
+use App\Models\AdminBadge\AdminBadge;
+use App\Models\AdminBadge\AdminBadgeType;
 use App\Models\AdminLog\AdminLog;
 use Devfactory\Media\MediaTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,6 +26,14 @@ class Admin extends Authenticatable
         return $this->morphMany(config('media.config.model'), 'mediable');
     }
 
+    public function adminLog()
+    {
+        return $this->hasMany(AdminLog::class, 'admin');
+    }
+
+    public function adminBadges() {
+        return $this->hasMany(AdminBadge::class);
+    }
 
     public function getImageUrl($conversion = null)
     {

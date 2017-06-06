@@ -88,7 +88,6 @@ class BookTypes extends Migration
             $table->integer('year_published');
             $table->string('isbn');
             $table->string('state');
-            $table->string('book_cover_url');
 
             /**
              * Generation focus level je atribut, ktory popisuje uroven knihy.

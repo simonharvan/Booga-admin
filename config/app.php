@@ -172,6 +172,7 @@ return [
         Medlib\MarcXML\Providers\ParserServiceProvider::class,
         Devfactory\Media\MediaServiceProvider::class,
         That0n3guy\Transliteration\TransliterationServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
 
 
         /*
@@ -234,6 +235,7 @@ return [
         'Yaz' => Medlib\Yaz\Facades\Yaz::class,
         'Query' => Medlib\Yaz\Facades\Query::class,
         'MarcXML' => Medlib\MarcXML\Facades\MarcXML::class,
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
 
     ],
 

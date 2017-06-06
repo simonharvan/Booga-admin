@@ -25,7 +25,9 @@ export default class MainView {
             if (!confirm($this.data('confirm'))) {
                 return false;
             }
-        })
+        });
+
+        $('[data-toggle="tooltip"]').tooltip();
     }
 };
 

@@ -18,12 +18,12 @@ class CreateBadges extends Migration
             $table->increments('id');
 
 
-            $table->string('script');
+            $table->string('script')->default(null);
 
             $table->unsignedInteger('event_type_id')->nullable();
             $table->foreign('event_type_id')->references('id')->on('Event_type');
             $table->string('operator');
-            $table->integer('number');
+            $table->integer('number')->default(0);
 
 
             $table->unsignedInteger('condition_id')->nullable();

@@ -37,6 +37,12 @@
                                value="">
                         @include('layout.components.validation_error', ['name' => 'password'])
                     </div>
+                    <div class="col-xs-12 checkbox">
+                        <label>
+                            <input class="checkbox" type="checkbox" name="super_admin"
+                                   value="true"> Super admin
+                        </label>
+                    </div>
                 </div>
                 <div class="col-xs-6">
                     <div class="col-xs-12">

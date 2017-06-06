@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-04-05.
+    * Generated on 2017-05-31.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -42,6 +42,7 @@ namespace PHPSTORM_META {
             'medlib.yaz.yaz' instanceof \Medlib\Yaz\Query\YazQuery,
             'medlib.yaz.query' instanceof \Medlib\Yaz\Parser\ParseQuery,
             'medlib.marcxml' instanceof \Medlib\MarcXML\Parser\Parser,
+            'Transliteration' instanceof \That0n3guy\Transliteration\Transliteration,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -169,6 +170,7 @@ namespace PHPSTORM_META {
             'medlib.yaz.yaz' instanceof \Medlib\Yaz\Query\YazQuery,
             'medlib.yaz.query' instanceof \Medlib\Yaz\Parser\ParseQuery,
             'medlib.marcxml' instanceof \Medlib\MarcXML\Parser\Parser,
+            'Transliteration' instanceof \That0n3guy\Transliteration\Transliteration,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -296,6 +298,7 @@ namespace PHPSTORM_META {
             'medlib.yaz.yaz' instanceof \Medlib\Yaz\Query\YazQuery,
             'medlib.yaz.query' instanceof \Medlib\Yaz\Parser\ParseQuery,
             'medlib.marcxml' instanceof \Medlib\MarcXML\Parser\Parser,
+            'Transliteration' instanceof \That0n3guy\Transliteration\Transliteration,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -423,6 +426,7 @@ namespace PHPSTORM_META {
             'medlib.yaz.yaz' instanceof \Medlib\Yaz\Query\YazQuery,
             'medlib.yaz.query' instanceof \Medlib\Yaz\Parser\ParseQuery,
             'medlib.marcxml' instanceof \Medlib\MarcXML\Parser\Parser,
+            'Transliteration' instanceof \That0n3guy\Transliteration\Transliteration,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,

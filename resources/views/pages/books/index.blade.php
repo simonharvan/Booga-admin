@@ -25,7 +25,9 @@
                     <th>Author</th>
                     <th>Year published</th>
                     <th>ISBN</th>
-                    <th>State</th>
+                    <th>Identify text quiz</th>
+                    <th>Identify character quiz</th>
+                    <th>Mini quiz</th>
                     <th>Book cover</th>
                     <th>Level</th>
                     <th>Energy for clearing</th>
@@ -37,22 +39,44 @@
                 </thead>
                 <tbody>
                 @foreach($books as $book)
-                    <tr data-href="{{ route('admin.admins.edit', ['id' => $book->id]) }}">
+                    <tr data-href="{{ route('admin.books.edit', ['id' => $book->id]) }}">
                         <td>{{ $book->id }}</td>
                         <td>{{ $book->name }}</td>
                         <td>{{ $book->author_name }}</td>
                         <td>{{ $book->year_published }}</td>
                         <td>{{ $book->isbn }}</td>
-                        <td><span class="{{ strtolower($book->state) }}">{{ $book->state }}</span></td>
-                        <td><a href="{{ $book->book_cover_url }}"><img src="{{ $book->book_cover_url }}" class="table_image center-block"/></a></td>
+                        <td>
+                            @if (isset($book->identifyTextQuiz))
+                                <i class="fa fa-check-circle"></i>
+                            @else
+                                <i class="fa fa-times"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if (isset($book->identifyCharacterQuiz))
+                                <i class="fa fa-check-circle"></i>
+                            @else
+                                <i class="fa fa-times"></i>
+                            @endif
+                        </td>
+                        <td>
+                            @if (isset($book->miniQuiz))
+                                <i class="fa fa-check-circle"></i>
+                            @else
+                                <i class="fa fa-times"></i>
+                            @endif
+                        </td>
+                        <td>
+                            <img src="{{ $book->avatarUrl }}" class="table_image center-block"/>
+                        </td>
                         <td>{{ $book->generation_focus_level }}</td>
                         <td>{{ $book->energy_for_clearing }}</td>
                         <td>{{ $book->time_for_clearing }}</td>
                         <td>{{ $book->created_at }}</td>
                         <td class="actions"><a type="button" class="btn-sm btn-primary"
-                               href="{{ route('admin.admins.edit', ['id' => $book->id]) }}">Edit</a>
-                        <a type="button" class="btn-sm btn-danger"
-                               href="{{ route('admin.admins.delete', ['id' => $book->id]) }}">Delete</a></td>
+                                               href="{{ route('admin.books.edit', ['id' => $book->id]) }}">Edit</a>
+                            <a type="button" class="btn-sm btn-danger"
+                               href="{{ route('admin.books.delete', ['id' => $book->id]) }}">Delete</a></td>
                     </tr>
                 @endforeach
                 </tbody>

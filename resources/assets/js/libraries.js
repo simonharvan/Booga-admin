@@ -5,24 +5,25 @@
 import * as $ from "jquery";
 $( document ).ready(function() {
 
-    ajaxOptions: {
-        dataType: 'json'
-    }
-
     $( "#test-library" ).click(function( event ) {
 
+        var formData = {
+            url: $('input[name=url]').val(),
+            port: $('input[name=port]').val(),
+            database: $('input[name=database_name]').val(),
+        };
 
         $.ajax({
             method: 'POST',
-            contentType: "application/json; charset=utf-8",
-            url: '/admin/libraries/test',
-            data: { id: 1, name: "Jason" },
+            url: '/test',
+            data: formData,
             success: function(data) {
-
-                alert('Data: ' + data);
+                alert(data);
+                console.log("Data test: ", data);
             },
             error: function(e) {
-                alert('Error: ' + e);
+                alert(e['responseText']);
+                console.error("Error test: ", e);
             },
             dataType: "json",
         });

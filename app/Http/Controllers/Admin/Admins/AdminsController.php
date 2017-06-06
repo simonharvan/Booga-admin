@@ -9,6 +9,7 @@
  */
 
 
+use App\Http\Controllers\Admin\AdminLogsHelper;
 use App\Http\Controllers\Admin\Controller;
 use App\Http\Requests\AdminAddRequest;
 use App\Http\Requests\AdminUpdateRequest;
@@ -17,6 +18,7 @@ use App\Models\AdminLog\AdminLog;
 use App\Models\Core\AdminLogType;
 use Exception;
 use Hash;
+use Illuminate\Http\Request;
 use MongoDB\Driver\Exception\DuplicateKeyException;
 
 
@@ -40,7 +42,7 @@ class AdminsController extends Controller
 
     public function create()
     {
-        return view('pages.admins.create');
+        return view('pages.avatars.create');
     }
 
     public function store(AdminAddRequest $request)
@@ -51,6 +53,7 @@ class AdminsController extends Controller
             $admin->password = Hash::make($request->password);
             $admin->email = $request->email;
             $admin->points = 0;
+            $admin->superadmin = $request->superadmin;
             $admin->save();
 
             if ($request->hasFile('profile_photo')) {
@@ -60,11 +63,7 @@ class AdminsController extends Controller
         } catch (Exception $exception) {
             return $exception;
         }
-        $adminLog = new AdminLog;
-        $adminLog->type = AdminLogType::ADMIN_CREATED;
-        $adminLog->text = $admin->email;
-        $adminLog->admin()->associate(auth()->user());
-        $adminLog->save();
+        AdminLogsHelper::log(AdminLogType::ADMIN_CREATED, auth()->user());
 
         return redirect()->route('admin.admins.index');
     }
@@ -89,17 +88,21 @@ class AdminsController extends Controller
         if ($request->password !== null) {
             $admin->password = Hash::make($request->password);
         }
+        if ($request->superadmin == "true") {
+            $admin->superadmin = true;
+        }else {
+            $admin->superadmin = false;
+        }
 
         $admin->save();
 
-        $adminLog = new AdminLog();
-        $adminLog->type = AdminLogType::ADMIN_UPDATED;
-        $adminLog->text = AdminLogType::ADMIN_UPDATED . $admin->email;
-        $adminLog->admin()->associate(auth()->user());
-        $adminLog->save();
+        if ($request->hasFile('profile_photo')) {
+            $admin->saveMedia($request->file('profile_photo'));
+        }
 
-
+        AdminLogsHelper::log(AdminLogType::ADMIN_UPDATED, auth()->user());
         return redirect()->route('admin.admins.index');
+
     }
 
     public function destroy($id)
@@ -108,6 +111,7 @@ class AdminsController extends Controller
         $admin = Admin::query()->find($id);
         $admin->delete();
 
+        AdminLogsHelper::log(AdminLogType::ADMIN_DELETED, auth()->user());
         return redirect()->route('admin.admins.index');
     }
 }

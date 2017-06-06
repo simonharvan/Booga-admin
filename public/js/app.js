@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10298,11 +10298,16 @@ return jQuery;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {window.$ = window.jQuery = __webpack_require__(0);
-__webpack_require__(5);
-__webpack_require__(6);
+__webpack_require__(9);
+__webpack_require__(10);
 
-__webpack_require__(4);
+__webpack_require__(7);
 __webpack_require__(3);
+__webpack_require__(6);
+__webpack_require__(5);
+__webpack_require__(8);
+__webpack_require__(4);
+__webpack_require__(33);
 
 window.App = {};
 
@@ -10328,29 +10333,277 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 /**
+ * Created by simonharvan on 29.5.17.
+ */
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_jquery__(document).ready(function () {
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=search]').autocomplete({
+        source: function source(request, response) {
+            __WEBPACK_IMPORTED_MODULE_0_jquery__["ajax"]({
+                method: 'GET',
+                url: '/search/' + __WEBPACK_IMPORTED_MODULE_0_jquery__('#libraries').val() + '/' + __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=search]').val(),
+                dataType: "json",
+                success: function success(data) {
+                    response(data['result']);
+                }
+            });
+        },
+        create: function create() {
+            __WEBPACK_IMPORTED_MODULE_0_jquery__(this).data('ui-autocomplete')._renderItem = function (ul, json) {
+                var result = void 0;
+
+                if (json['note'] != null) {
+                    result = __WEBPACK_IMPORTED_MODULE_0_jquery__('<li>').append('<strong>' + json['title'] + '</strong> (' + json['year_published'] + ') ' + json['author'] + '<br><i>' + json['note'] + '</i>').appendTo(ul);
+                } else {
+                    result = __WEBPACK_IMPORTED_MODULE_0_jquery__('<li>').append('<strong>' + json['title'] + '</strong><br><i>' + json['year_published'] + '</i>').appendTo(ul);
+                }
+                return result;
+            };
+        },
+        minLength: 3,
+        select: function select(event, item) {
+            loadItem(item);
+        }
+    });
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#load-cover').click(function () {
+        loadImage(__WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=isbn]').val());
+    });
+});
+
+function loadImage(isbn) {
+    isbn = isbn.replace(/\D/g, '');
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('.cover-image').attr('src', 'http://cache2.obalkyknih.cz/api/cover?multi={%22isbn%22:%22' + isbn + '%22}&testenv=XcDf2FvUP');
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=cover_photo_url]').val('http://cache2.obalkyknih.cz/api/cover?multi={%22isbn%22:%22' + isbn + '%22}&testenv=XcDf2FvUP');
+}
+
+function loadItem(json) {
+    var item = json['item'];
+    if (item['title'] != null) {
+        var name = __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=name]');
+        name.val(item['title']);
+        name.focus();
+    }
+    if (item['isbn'] != null) {
+
+        var isbn = __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=isbn]');
+        isbn.val(item['isbn']);
+        isbn.focus();
+        loadImage(item['isbn']);
+    }
+    if (item['author'] != null) {
+        var author = __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=author]');
+        author.val(item['author']);
+        author.focus();
+    }
+    if (item['year_published'] != null) {
+        var year = __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=year_published]');
+        year.val(item['year_published']);
+        year.focus();
+    }
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=search]').val('');
+}
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+/**
+ * Created by simonharvan on 26.5.17.
+ */
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_jquery__(document).ready(function () {
+    var answer = __WEBPACK_IMPORTED_MODULE_0_jquery__('.answer-1').html();
+    var counter = 2;
+    var max_fields = 20;
+
+    var answersArea = __WEBPACK_IMPORTED_MODULE_0_jquery__('.answers-area');
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#add-answer-char').click(function (e) {
+        e.preventDefault();
+        if (counter < max_fields) {
+            //max input box allowed
+            counter++; //text box increment
+            answersArea.append('<div class="answer" id="answer-' + counter + '">' + answer + '</div>');
+            var tempAnswer = __WEBPACK_IMPORTED_MODULE_0_jquery__('#answer-' + counter);
+            tempAnswer.find('.answer-label').html('Answer ' + counter);
+        }
+    });
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#remove-answer-char').click(function (e) {
+        e.preventDefault();
+        if (counter > 1) {
+            //max input box allowed
+            //text box increment
+            answersArea.find('#answer-' + counter).fadeOut(300, function () {
+                __WEBPACK_IMPORTED_MODULE_0_jquery__(this).remove();
+            });
+            counter--;
+        }
+    });
+
+    var hint = __WEBPACK_IMPORTED_MODULE_0_jquery__('.hint').html();
+    var counterHints = 1;
+    var max_hints = 20;
+    var hintsArea = __WEBPACK_IMPORTED_MODULE_0_jquery__('.hint-area');
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#add-hint').click(function (e) {
+        e.preventDefault();
+        if (counterHints < max_hints) {
+            //max input box allowed
+            counterHints++; //text box increment
+            hintsArea.append('<div class="hint" id="hint-' + counterHints + '">' + hint + '</div>');
+            var tempHint = __WEBPACK_IMPORTED_MODULE_0_jquery__('#hint-' + counterHints);
+            tempHint.find('.hint-label').html('Hint ' + counterHints);
+        }
+    });
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#remove-hint').click(function (e) {
+        e.preventDefault();
+        if (counterHints > 0) {
+            //max input box allowed
+            //text box increment
+            hintsArea.find('#hint-' + counterHints).fadeOut(300, function () {
+                __WEBPACK_IMPORTED_MODULE_0_jquery__(this).remove();
+            });
+            counterHints--;
+        }
+    });
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('.store-identify-character-quiz').submit(function (e) {
+        var charQuiz = {};
+
+        charQuiz['points'] = __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=points]').val();
+        charQuiz['unlock'] = __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=unlock]').val();
+
+        var answerArray = [];
+
+        answersArea.find('.answer').each(function (item, index) {
+            var answerJson = {};
+            answerJson['answer'] = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('input[name=answer]').val();
+            answerJson['correct'] = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('input[name=correct]').prop('checked');
+            answerArray.push(answerJson);
+        });
+
+        var hintsArray = [];
+
+        hintsArea.find('.hint').each(function (item, index) {
+            var hintJson = {};
+            hintJson['hint'] = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('input[name=hint]').val();
+            hintJson['time'] = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('input[name=time]').val();
+            hintsArray.push(hintJson);
+        });
+
+        charQuiz['answers'] = answerArray;
+        charQuiz['hints'] = hintsArray;
+
+        __WEBPACK_IMPORTED_MODULE_0_jquery__('#json').val(JSON.stringify(charQuiz));
+    });
+});
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+/**
+ * Created by simonharvan on 25.5.17.
+ */
+
+
+__WEBPACK_IMPORTED_MODULE_0_jquery__(document).ready(function () {
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('.incorrect-text').on('input', function () {
+
+        var text = __WEBPACK_IMPORTED_MODULE_0_jquery__('.incorrect-text').val();
+        var words = text.trim().replace(/\./g, ' .').replace(/\?/g, ' ?').replace(/\!/g, ' !').replace(/\,/g, ' ,').replace(/\"/g, ' " ').replace(/ +(?= )/g, '').split(" ");
+
+        var result = [];
+
+        __WEBPACK_IMPORTED_MODULE_0_jquery__('.incorrect-words').empty();
+
+        // generate words with ids to change their future css
+        words.forEach(function (item, i) {
+            var word = __WEBPACK_IMPORTED_MODULE_0_jquery__('<span />').attr({ 'id': 'word' + i }).html(" " + item);
+            word.css('cursor', 'pointer');
+            word.css('color', 'black');
+            word.addClass('unselected');
+
+            __WEBPACK_IMPORTED_MODULE_0_jquery__('.incorrect-words').append(word);
+
+            __WEBPACK_IMPORTED_MODULE_0_jquery__('#word' + i).click(function () {
+                if (__WEBPACK_IMPORTED_MODULE_0_jquery__(this).hasClass('unselected')) {
+                    __WEBPACK_IMPORTED_MODULE_0_jquery__(this).addClass('selected');
+                    __WEBPACK_IMPORTED_MODULE_0_jquery__(this).removeClass('unselected');
+                    __WEBPACK_IMPORTED_MODULE_0_jquery__(this).css('color', 'red');
+                } else {
+                    __WEBPACK_IMPORTED_MODULE_0_jquery__(this).css('color', 'black');
+                    __WEBPACK_IMPORTED_MODULE_0_jquery__(this).removeClass('selected');
+                    __WEBPACK_IMPORTED_MODULE_0_jquery__(this).addClass('unselected');
+                }
+            });
+        });
+    });
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('.store-identify-text').submit(function (e) {
+        var result = __WEBPACK_IMPORTED_MODULE_0_jquery__('.incorrect-words').find('span.unselected');
+
+        var words = [];
+        result.each(function (i, item) {
+            words.push(__WEBPACK_IMPORTED_MODULE_0_jquery__(item).attr('id'));
+        });
+
+        __WEBPACK_IMPORTED_MODULE_0_jquery__('#correct-words').val(words.join(','));
+    });
+});
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+/**
  * Created by simonharvan on 4.4.17.
  */
 
 
 __WEBPACK_IMPORTED_MODULE_0_jquery__(document).ready(function () {
 
-    ajaxOptions: {
-        dataType: 'json';
-    }
-
     __WEBPACK_IMPORTED_MODULE_0_jquery__("#test-library").click(function (event) {
+
+        var formData = {
+            url: __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=url]').val(),
+            port: __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=port]').val(),
+            database: __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=database_name]').val()
+        };
 
         __WEBPACK_IMPORTED_MODULE_0_jquery__["ajax"]({
             method: 'POST',
-            contentType: "application/json; charset=utf-8",
-            url: '/admin/libraries/test',
-            data: { id: 1, name: "Jason" },
+            url: '/test',
+            data: formData,
             success: function success(data) {
-
-                alert('Data: ' + data);
+                alert(data);
+                console.log("Data test: ", data);
             },
             error: function error(e) {
-                alert('Error: ' + e);
+                alert(e['responseText']);
+                console.error("Error test: ", e);
             },
             dataType: "json"
         });
@@ -10358,7 +10611,7 @@ __WEBPACK_IMPORTED_MODULE_0_jquery__(document).ready(function () {
 });
 
 /***/ }),
-/* 4 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10390,6 +10643,8 @@ var MainView = function MainView() {
             return false;
         }
     });
+
+    $('[data-toggle="tooltip"]').tooltip();
 };
 
 /* harmony default export */ __webpack_exports__["default"] = MainView;
@@ -10399,7 +10654,120 @@ window.MainView = MainView;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 5 */
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+/**
+ * Created by simonharvan on 26.5.17.
+ */
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_jquery__(document).ready(function () {
+    var questionRef = __WEBPACK_IMPORTED_MODULE_0_jquery__('.question-box');
+    var question = questionRef.html();
+    var answer = __WEBPACK_IMPORTED_MODULE_0_jquery__('.answer').html();
+    var counter = 1;
+    var max_fields = 20;
+
+    var questionsArea = __WEBPACK_IMPORTED_MODULE_0_jquery__('.questions-area');
+
+    questionRef.attr('id', 'question-1');
+    questionRef.find('.label-question').html('Question ' + counter);
+    questionRef.find('a#add-answer').click(function (e) {
+        var id = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).parent().parent().attr('id');
+        questionsArea.find('#' + id).find('.answer-area').append('<div class="answer">' + answer + '</div>');
+    });
+    questionRef.find('a#remove-answer').click(function (e) {
+
+        var id = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).parent().parent().attr('id');
+        var answers = questionsArea.find('#' + id).find('.answer');
+        if (answers.length > 2) {
+            answers[answers.length - 1].remove();
+        }
+    });
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#add-question').click(function (e) {
+        e.preventDefault();
+        if (counter < max_fields) {
+            //max input box allowed
+            counter++; //text box increment
+            questionsArea.append('<div class="row col-xs-12 question-box" id="question-' + counter + '">' + question + '</div>');
+            var tempQuestion = __WEBPACK_IMPORTED_MODULE_0_jquery__('#question-' + counter);
+            tempQuestion.find('.label-question').html('Question ' + counter);
+
+            tempQuestion.find('a#add-answer').click(function (e) {
+                var id = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).parent().parent().attr('id');
+                questionsArea.find('#' + id).find('.answer-area').append('<div class="answer">' + answer + '</div>');
+            });
+            tempQuestion.find('a#remove-answer').click(function (e) {
+
+                var id = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).parent().parent().attr('id');
+                var answers = questionsArea.find('#' + id).find('.answer');
+                if (answers.length > 2) {
+                    answers[answers.length - 1].remove();
+                }
+            });
+        }
+    });
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#remove-question').click(function (e) {
+        e.preventDefault();
+        if (counter > 1) {
+            //max input box allowed
+            //text box increment
+            questionsArea.find('#question-' + counter).fadeOut(300, function () {
+                __WEBPACK_IMPORTED_MODULE_0_jquery__(this).remove();
+            });
+            counter--;
+        }
+    });
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('.store-mini-quiz').submit(function (e) {
+        if (counter < 8) {
+            alert("You have to enter minimum 8 questions");
+            return false;
+        }
+
+        var miniQuiz = {};
+
+        miniQuiz['energy_loss'] = __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=energy_loss]').val();
+        miniQuiz['points'] = __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=points]').val();
+        miniQuiz['unlock'] = __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=unlock]').val();
+
+        var questionArray = [];
+
+        questionsArea.find('.question-box').each(function (item, index) {
+            var questionJson = {};
+            questionJson['question'] = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('input[name=question]').val();
+            questionJson['time_to_answer'] = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('input[name=time_to_answer]').val();
+            questionJson['points_to_obtain'] = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('input[name=points_to_obtain]').val();
+
+            var answerArray = [];
+
+            __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('.answer').each(function (item, index) {
+                var answerJson = {};
+                answerJson['answer'] = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('input[name=answer]').val();
+                answerJson['correct'] = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('input[name=correct]').prop('checked');
+                answerArray.push(answerJson);
+            });
+
+            questionJson['answers'] = answerArray;
+            questionArray.push(questionJson);
+        });
+
+        miniQuiz['questions'] = questionArray;
+
+        __WEBPACK_IMPORTED_MODULE_0_jquery__('#json').val(JSON.stringify(miniQuiz));
+    });
+});
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($, jQuery) {$(document).ready(function () {
@@ -10655,25 +11023,25 @@ window.MainView = MainView;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0)))
 
 /***/ }),
-/* 6 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // This file is autogenerated via the `commonjs` Grunt task. You can require() this file in a CommonJS environment.
-__webpack_require__(18)
-__webpack_require__(8)
-__webpack_require__(9)
-__webpack_require__(10)
-__webpack_require__(11)
+__webpack_require__(22)
 __webpack_require__(12)
 __webpack_require__(13)
-__webpack_require__(17)
 __webpack_require__(14)
 __webpack_require__(15)
 __webpack_require__(16)
-__webpack_require__(7)
+__webpack_require__(17)
+__webpack_require__(21)
+__webpack_require__(18)
+__webpack_require__(19)
+__webpack_require__(20)
+__webpack_require__(11)
 
 /***/ }),
-/* 7 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* ========================================================================
@@ -10842,7 +11210,7 @@ __webpack_require__(7)
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 8 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* ========================================================================
@@ -10943,7 +11311,7 @@ __webpack_require__(7)
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 9 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* ========================================================================
@@ -11075,7 +11443,7 @@ __webpack_require__(7)
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 10 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* ========================================================================
@@ -11319,7 +11687,7 @@ __webpack_require__(7)
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 11 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* ========================================================================
@@ -11538,7 +11906,7 @@ __webpack_require__(7)
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 12 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* ========================================================================
@@ -11710,7 +12078,7 @@ __webpack_require__(7)
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 13 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* ========================================================================
@@ -12056,7 +12424,7 @@ __webpack_require__(7)
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 14 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* ========================================================================
@@ -12171,7 +12539,7 @@ __webpack_require__(7)
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 15 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* ========================================================================
@@ -12350,7 +12718,7 @@ __webpack_require__(7)
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 16 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* ========================================================================
@@ -12512,7 +12880,7 @@ __webpack_require__(7)
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 17 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* ========================================================================
@@ -13039,7 +13407,7 @@ __webpack_require__(7)
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 18 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* ========================================================================
@@ -13105,12 +13473,86 @@ __webpack_require__(7)
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 19 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
 module.exports = __webpack_require__(2);
 
+
+/***/ }),
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+/**
+ * Created by simonharvan on 5.6.17.
+ */
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_jquery__(document).ready(function () {
+    var condtionRef = __WEBPACK_IMPORTED_MODULE_0_jquery__('.condition');
+    var condition = condtionRef.html();
+    var conditionArea = __WEBPACK_IMPORTED_MODULE_0_jquery__('.conditions-area');
+    var counter = 1;
+
+    condtionRef.find('.condition-name').html('Condition 1');
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#add-condition').click(function () {
+        counter++;
+        conditionArea.append('<div class="condition" id="condition-' + counter + '">' + condition + '</div>');
+
+        var tempCond = __WEBPACK_IMPORTED_MODULE_0_jquery__('#condition-' + counter);
+        tempCond.find('.condition-name').html('Condition ' + counter);
+    });
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#remove-condition').click(function () {
+        if (counter > 1) {
+            //max input box allowed
+            //text box increment
+            conditionArea.find('#condition-' + counter).fadeOut(300, function () {
+                __WEBPACK_IMPORTED_MODULE_0_jquery__(this).remove();
+            });
+            counter--;
+        }
+    });
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#store-badge').submit(function (e) {
+
+        var badge = {};
+
+        badge['name'] = __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=name]').val();
+        badge['description'] = __WEBPACK_IMPORTED_MODULE_0_jquery__('input[name=description]').val();
+
+        var conditionsArray = [];
+
+        conditionArea.find('.condition').each(function (item, index) {
+            var conditionJson = {};
+            conditionJson['script'] = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('textarea[name=script]').val();
+            conditionJson['event_type'] = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('#event_type').val();
+            conditionJson['operator'] = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('#operator').val();
+            conditionJson['number'] = __WEBPACK_IMPORTED_MODULE_0_jquery__(this).find('input[name=number]').val();
+            conditionsArray.push(conditionJson);
+        });
+
+        badge['conditions'] = conditionsArray;
+
+        __WEBPACK_IMPORTED_MODULE_0_jquery__('#json').val(JSON.stringify(badge));
+    });
+});
 
 /***/ })
 /******/ ]);

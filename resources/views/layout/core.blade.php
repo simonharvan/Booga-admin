@@ -20,13 +20,14 @@
     <!-- CSRF Token -->
     <meta name="_token" content="{{ csrf_token() }}">
 </head>
-<body class="hold-transition skin-black sidebar-mini">
+<body class="hold-transition skin-black-light sidebar-mini">
 @yield('core_content')
 
 <script src="{{ asset('js/app.js') }}"></script>
 <script>
     App.MainView = new MainView();
 </script>
+
 @yield('scripts')
 </body>
 </html>

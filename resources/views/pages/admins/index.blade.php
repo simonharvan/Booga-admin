@@ -20,9 +20,10 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th><a href="{{ route('admin.admins.index', ['filter' => 'name']) }}">Name</a></th>
+                    <th>Name</th>
                     <th>Email</th>
                     <th>Points</th>
+                    <th>Superadmin</th>
                     <th>Profile photo</th>
                     <th></th>
                 </tr>
@@ -34,6 +35,11 @@
                         <td>{{ $admin->name }}</td>
                         <td>{{ $admin->email }}</td>
                         <td>{{ $admin->points }}</td>
+                        @if ($admin->superadmin)
+                            <td><i class="fa phpdebugbar-fa-check"></i></td>
+                        @else
+                            <td><i class="fa phpdebugbar-fa-times"></i></td>
+                        @endif
                         <td><img src="{{ $admin->avatarUrl }}" class="table_image"></td>
                         <td class="actions"><a type="button" class="btn-sm btn-primary"
                                                href="{{ route('admin.admins.edit', ['id' => $admin->id]) }}">Edit</a>

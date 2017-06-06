@@ -1,10 +1,13 @@
+
+@import "variables";
+
 .row {
-  margin-bottom: 10px ;
+  margin-bottom: 10px;
 }
 
 td.actions {
   text-align: center;
-  line-height: 2!important;
+  line-height: 2 !important;
 }
 
 .table_image {
@@ -17,4 +20,36 @@ td.actions {
   border-radius: 2px;
   color: white;
 }
+
+.progress {
+  padding: 4px;
+  background-color: $status_in_progress;
+  border-radius: 2px;
+  color: white;
+}
+
+.ui-autocomplete-loading {
+  background: white url('/images/loader.gif') right center no-repeat;
+}
+
+.ui-autocomplete {
+  list-style: none;
+  text-align: left;
+}
+
+.ui-menu-item {
+
+  background: white;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.ui-menu-item:hover {
+  background: lightgray;
+}
+
+.margin-top {
+  margin-top: 10px;
+}
+
 

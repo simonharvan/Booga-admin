@@ -4,7 +4,12 @@ require('bootstrap');
 
 
 require('./mainView');
+require('./books');
 require('./libraries');
+require('./identifyText');
+require('./miniQuiz');
+require('./identifyCharacter');
+require('./badges');
 
 window.App = {};
 

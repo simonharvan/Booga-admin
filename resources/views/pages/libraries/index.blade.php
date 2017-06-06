@@ -45,9 +45,9 @@
                         <td>{{ $library->street_number }}</td>
                         <td>{{ $library->created_at }}</td>
                         <td class="actions"><a type="button" class="btn-sm btn-primary"
-                                               href="{{ route('admin.admins.edit', ['id' => $library->id]) }}">Edit</a>
-                            <a type="button" class="btn-sm btn-danger"
-                               href="{{ route('admin.admins.delete', ['id' => $library->id]) }}">Delete</a></td>
+                                               href="{{ route('admin.libraries.edit', ['id' => $library->id]) }}">Edit</a>
+                            <a type="button" class="btn-sm btn-danger confirm" data-confirm="Do you really want to delete?"
+                               href="{{ route('admin.libraries.delete', ['id' => $library->id]) }}">Delete</a></td>
                     </tr>
                 @endforeach
                 </tbody>

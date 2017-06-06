@@ -15,7 +15,7 @@
 @section('content')
     <div class="box">
         <div class="box-body">
-            <form action="{{ route('admin.libraries.store') }}" method="post">
+            <form class="store-library"  action="{{ route('admin.libraries.store') }}" method="post">
                 {{ csrf_field() }}
                 <div class="row col-xs-12">
                     <div class="col-xs-12 @include('layout.components.validation_color', ['name' => 'name'])">

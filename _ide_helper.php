@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.17 on 2017-04-05.
+ * Generated for Laravel 5.4.24 on 2017-05-31.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -423,6 +423,21 @@ namespace Illuminate\Support\Facades {
         public static function registerDeferredProvider($provider, $service = null)
         {
             \Illuminate\Foundation\Application::registerDeferredProvider($provider, $service);
+        }
+        
+        /**
+         * Resolve the given type from the container.
+         * 
+         * (Overriding Container::makeWith)
+         *
+         * @param string $abstract
+         * @param array $parameters
+         * @return mixed 
+         * @static 
+         */
+        public static function makeWith($abstract, $parameters)
+        {
+            return \Illuminate\Foundation\Application::makeWith($abstract, $parameters);
         }
         
         /**
@@ -1091,20 +1106,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Resolve the given type with the given parameter overrides.
-         *
-         * @param string $abstract
-         * @param array $parameters
-         * @return mixed 
-         * @static 
-         */
-        public static function makeWith($abstract, $parameters)
-        {
-            //Method inherited from \Illuminate\Container\Container            
-            return \Illuminate\Foundation\Application::makeWith($abstract, $parameters);
-        }
-        
-        /**
          * Instantiate a concrete instance of the given type.
          *
          * @param string $concrete
@@ -1170,6 +1171,19 @@ namespace Illuminate\Support\Facades {
         {
             //Method inherited from \Illuminate\Container\Container            
             return \Illuminate\Foundation\Application::getAlias($abstract);
+        }
+        
+        /**
+         * Remove all of the extender callbacks for a given type.
+         *
+         * @param string $abstract
+         * @return void 
+         * @static 
+         */
+        public static function forgetExtenders($abstract)
+        {
+            //Method inherited from \Illuminate\Container\Container            
+            \Illuminate\Foundation\Application::forgetExtenders($abstract);
         }
         
         /**
@@ -1354,13 +1368,13 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $command
          * @param array $parameters
-         * @return void 
+         * @return \Illuminate\Foundation\Bus\PendingDispatch 
          * @static 
          */
         public static function queue($command, $parameters = array())
         {
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            \App\Console\Kernel::queue($command, $parameters);
+            return \App\Console\Kernel::queue($command, $parameters);
         }
         
         /**
@@ -1913,6 +1927,31 @@ namespace Illuminate\Support\Facades {
         public static function guest()
         {
             return \Illuminate\Auth\SessionGuard::guest();
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro)
+        {
+            \Illuminate\Auth\SessionGuard::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name)
+        {
+            return \Illuminate\Auth\SessionGuard::hasMacro($name);
         }
         
     }         
@@ -4079,7 +4118,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|\Closure $listener
          * @param bool $wildcard
-         * @return mixed 
+         * @return \Closure 
          * @static 
          */
         public static function makeListener($listener, $wildcard = false)
@@ -4200,6 +4239,18 @@ namespace Illuminate\Support\Facades {
         public static function requireOnce($file)
         {
             return \Illuminate\Filesystem\Filesystem::requireOnce($file);
+        }
+        
+        /**
+         * Get the MD5 hash of the file at the given path.
+         *
+         * @param string $path
+         * @return string 
+         * @static 
+         */
+        public static function hash($path)
+        {
+            return \Illuminate\Filesystem\Filesystem::hash($path);
         }
         
         /**
@@ -4626,6 +4677,20 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Define abilities for a resource.
+         *
+         * @param string $name
+         * @param string $class
+         * @param array $abilities
+         * @return $this 
+         * @static 
+         */
+        public static function resource($name, $class, $abilities = null)
+        {
+            return \Illuminate\Auth\Access\Gate::resource($name, $class, $abilities);
+        }
+        
+        /**
          * Define a policy class for a given class type.
          *
          * @param string $class
@@ -4749,6 +4814,17 @@ namespace Illuminate\Support\Facades {
         public static function forUser($user)
         {
             return \Illuminate\Auth\Access\Gate::forUser($user);
+        }
+        
+        /**
+         * Get all of the defined abilities.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function abilities()
+        {
+            return \Illuminate\Auth\Access\Gate::abilities();
         }
         
     }         
@@ -5576,6 +5652,31 @@ namespace Illuminate\Support\Facades {
             return \Illuminate\Mail\Mailer::setQueue($queue);
         }
         
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro)
+        {
+            \Illuminate\Mail\Mailer::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name)
+        {
+            return \Illuminate\Mail\Mailer::hasMacro($name);
+        }
+        
     }         
 
     class Notification {
@@ -6364,6 +6465,18 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Check if the route name matches the given string.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function routeIs($name)
+        {
+            return \Illuminate\Http\Request::routeIs($name);
+        }
+        
+        /**
          * Determine if the current request URL and query string matches a pattern.
          *
          * @return bool 
@@ -6763,6 +6876,8 @@ namespace Illuminate\Support\Facades {
          * You should only list the reverse proxies that you manage directly.
          *
          * @param array $proxies A list of trusted proxies
+         * @param int $trustedHeaderSet A bit field of Request::HEADER_*, usually either Request::HEADER_FORWARDED or Request::HEADER_X_FORWARDED_ALL, to set which headers to trust from your proxies
+         * @throws \InvalidArgumentException When $trustedHeaderSet is invalid
          * @static 
          */
         public static function setTrustedProxies($proxies)
@@ -6781,6 +6896,18 @@ namespace Illuminate\Support\Facades {
         {
             //Method inherited from \Symfony\Component\HttpFoundation\Request            
             return \Illuminate\Http\Request::getTrustedProxies();
+        }
+        
+        /**
+         * Gets the set of trusted headers from trusted proxies.
+         *
+         * @return int A bit field of Request::HEADER_* that defines which headers are trusted from your proxies
+         * @static 
+         */
+        public static function getTrustedHeaderSet()
+        {
+            //Method inherited from \Symfony\Component\HttpFoundation\Request            
+            return \Illuminate\Http\Request::getTrustedHeaderSet();
         }
         
         /**
@@ -6825,6 +6952,7 @@ namespace Illuminate\Support\Facades {
          * @param string $key The header key
          * @param string $value The header name
          * @throws \InvalidArgumentException
+         * @deprecated since version 3.3, to be removed in 4.0. Use "X-Forwarded-*" headers or the "Forwarded" header defined in RFC7239, and the $trustedHeaderSet argument of the Request::setTrustedProxies() method instead.
          * @static 
          */
         public static function setTrustedHeaderName($key, $value)
@@ -6839,6 +6967,7 @@ namespace Illuminate\Support\Facades {
          * @param string $key The header key
          * @return string The header name
          * @throws \InvalidArgumentException
+         * @deprecated since version 3.3, to be removed in 4.0. Use the Request::getTrustedHeaderSet() method instead.
          * @static 
          */
         public static function getTrustedHeaderName($key)
@@ -6999,7 +7128,7 @@ namespace Illuminate\Support\Facades {
          * ("Client-Ip" for instance), configure it via "setTrustedHeaderName()" with
          * the "client-ip" key.
          *
-         * @return string The client IP address
+         * @return string|null The client IP address
          * @see getClientIps()
          * @see http://en.wikipedia.org/wiki/X-Forwarded-For
          * @static 
@@ -7102,7 +7231,7 @@ namespace Illuminate\Support\Facades {
          * If your reverse proxy uses a different header name than "X-Forwarded-Port",
          * configure it via "setTrustedHeaderName()" with the "client-port" key.
          *
-         * @return string 
+         * @return int|string can be a string if fetched from the server bag
          * @static 
          */
         public static function getPort()
@@ -7287,7 +7416,7 @@ namespace Illuminate\Support\Facades {
          * configure it via "setTrustedHeaderName()" with the "client-host" key.
          *
          * @return string 
-         * @throws \UnexpectedValueException when the host name is invalid
+         * @throws SuspiciousOperationException when the host name is invalid or not trusted
          * @static 
          */
         public static function getHost()
@@ -8401,6 +8530,20 @@ namespace Illuminate\Support\Facades {
         public static function resource($name, $controller, $options = array())
         {
             \Illuminate\Routing\Router::resource($name, $controller, $options);
+        }
+        
+        /**
+         * Route an api resource to a controller.
+         *
+         * @param string $name
+         * @param string $controller
+         * @param array $options
+         * @return void 
+         * @static 
+         */
+        public static function apiResource($name, $controller, $options = array())
+        {
+            \Illuminate\Routing\Router::apiResource($name, $controller, $options);
         }
         
         /**
@@ -9926,7 +10069,7 @@ namespace Illuminate\Support\Facades {
          * Store the uploaded file on the disk.
          *
          * @param string $path
-         * @param \Illuminate\Http\UploadedFile $file
+         * @param \Illuminate\Http\File|\Illuminate\Http\UploadedFile $file
          * @param array $options
          * @return string|false 
          * @static 
@@ -10590,7 +10733,21 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Register a custom implicit validator message replacer.
+         * Register a custom dependent validator extension.
+         *
+         * @param string $rule
+         * @param \Closure|string $extension
+         * @param string $message
+         * @return void 
+         * @static 
+         */
+        public static function extendDependent($rule, $extension, $message = null)
+        {
+            \Illuminate\Validation\Factory::extendDependent($rule, $extension, $message);
+        }
+        
+        /**
+         * Register a custom validator message replacer.
          *
          * @param string $rule
          * @param \Closure|string $replacer
@@ -11204,6 +11361,19 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Get the contents of a section.
+         *
+         * @param string $name
+         * @param string $default
+         * @return mixed 
+         * @static 
+         */
+        public static function getSection($name, $default = null)
+        {
+            return \Illuminate\View\Factory::getSection($name, $default);
+        }
+        
+        /**
          * Get the entire array of sections.
          *
          * @return array 
@@ -11408,7 +11578,14 @@ namespace Medlib\Yaz\Facades {
             //Method inherited from \Medlib\Yaz\Factory\YazFactory            
             return \Medlib\Yaz\Query\YazQuery::from($source);
         }
-        
+
+
+        public static function fromUrl($url, $port, $database, $options)
+        {
+            //Method inherited from \Medlib\Yaz\Factory\YazFactory
+            return \Medlib\Yaz\Query\YazQuery::fromUrl($url, $port, $database, $options);
+        }
+
         /**
          * 
          *
@@ -11553,9 +11730,80 @@ namespace Medlib\MarcXML\Facades {
          * @return \Medlib\MarcXML\Records\Record 
          * @static 
          */
-        public static function parse($record)
+        public static function parse($record, $from)
         {
-            return \Medlib\MarcXML\Parser\Parser::parse($record);
+            return \Medlib\MarcXML\Parser\Parser::parse($record, $from);
+        }
+        
+    }         
+}
+    
+namespace That0n3guy\Transliteration\Facades {
+
+    class Transliteration {
+        
+        /**
+         * Transliterates and sanitizes a file name.
+         * 
+         * The resulting file name has white space replaced with underscores, consists
+         * of only US-ASCII characters, and is converted to lowercase (if configured).
+         * If multiple files have been submitted as an array, the names will be
+         * processed recursively.
+         *
+         * @param $filename A file name, or an array of file names.
+         * @param $source_langcode Optional ISO 639 language code that denotes the language of the input and
+         *   is used to apply language-specific variations. If the source language is
+         *   not known at the time of transliteration, it is recommended to set this
+         *   argument to the site default language to produce consistent results.
+         *   Otherwise the current display language will be used.
+         * @return \That0n3guy\Transliteration\Sanitized file name, or array of sanitized file names.
+         * @see language_default()
+         * @static 
+         */
+        public static function clean_filename($filename, $source_langcode = null)
+        {
+            return \That0n3guy\Transliteration\Transliteration::clean_filename($filename, $source_langcode);
+        }
+        
+        /**
+         * Transliterates UTF-8 encoded text to US-ASCII.
+         * 
+         * Based on Mediawiki's UtfNormal::quickIsNFCVerify().
+         *      Swiped from drupal's transliteration module: https://drupal.org/project/transliteration
+         *
+         * @param $string UTF-8 encoded text input.
+         * @param $unknown Replacement string for characters that do not have a suitable ASCII
+         *   equivalent.
+         * @param $source_langcode Optional ISO 639 language code that denotes the language of the input and
+         *   is used to apply language-specific variations. If the source language is
+         *   not known at the time of transliteration, it is recommended to set this
+         *   argument to the site default language to produce consistent results.
+         *   Otherwise the current display language will be used.
+         * @return \That0n3guy\Transliteration\Transliterated text.
+         * @static 
+         */
+        public static function transliteration_process($string, $unknown = '?', $source_langcode = null)
+        {
+            return \That0n3guy\Transliteration\Transliteration::transliteration_process($string, $unknown, $source_langcode);
+        }
+        
+        /**
+         * Replaces a Unicode character using the transliteration database.
+         * 
+         * Swiped from drupal's transliteration module: https://drupal.org/project/transliteration
+         *
+         * @param $ord An ordinal Unicode character code.
+         * @param $unknown Replacement string for characters that do not have a suitable ASCII
+         *   equivalent.
+         * @param $langcode Optional ISO 639 language code that denotes the language of the input and
+         *   is used to apply language-specific variations.  Defaults to the current
+         *   display language.
+         * @return \That0n3guy\Transliteration\ASCII replacement character.
+         * @static 
+         */
+        public static function transliteration_replace($ord, $unknown = '?', $langcode = 'eng')
+        {
+            return \That0n3guy\Transliteration\Transliteration::transliteration_replace($ord, $unknown, $langcode);
         }
         
     }         
@@ -11628,6 +11876,18 @@ namespace {
     
     class Eloquent extends \Illuminate\Database\Eloquent\Model {    
         /**
+         * Create and return an un-saved model instance.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function make($attributes = array())
+        {
+            return \Illuminate\Database\Eloquent\Builder::make($attributes);
+        }
+        
+        /**
          * Register a new global scope.
          *
          * @param string $identifier
@@ -11690,7 +11950,7 @@ namespace {
         /**
          * Add a basic where clause to the query.
          *
-         * @param string|\Closure $column
+         * @param string|array|\Closure $column
          * @param string $operator
          * @param mixed $value
          * @param string $boolean
@@ -12049,6 +12309,18 @@ namespace {
         }
         
         /**
+         * Create a new instance of the model being queried.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function newModelInstance($attributes = array())
+        {
+            return \Illuminate\Database\Eloquent\Builder::newModelInstance($attributes);
+        }
+        
+        /**
          * Get the underlying query builder instance.
          *
          * @return \Illuminate\Database\Query\Builder 
@@ -12182,8 +12454,8 @@ namespace {
          * Apply the callback's query changes if the given "value" is true.
          *
          * @param mixed $value
-         * @param \Closure $callback
-         * @param \Closure $default
+         * @param callable $callback
+         * @param callable $default
          * @return mixed 
          * @static 
          */
@@ -13592,6 +13864,8 @@ namespace {
     class Query extends \Medlib\Yaz\Facades\Query {}
     
     class MarcXML extends \Medlib\MarcXML\Facades\MarcXML {}
+    
+    class Transliteration extends \That0n3guy\Transliteration\Facades\Transliteration {}
     
 }
 

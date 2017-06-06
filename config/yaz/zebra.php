@@ -17,6 +17,19 @@ return [
 
         ],
     ],
+    'UNI' => [
+        'fullname' => 'ALeph Z39.50 server v NK ČR',
+        'instance' => 'UNI',
+        'dsn' => 'yaz://aleph.nkp.cz:9991/NKC-UTF', //TOUT
+        'format' => 'UNIMARC',
+        'elementset' => 'F',
+        'options' => [
+            'protocol' => 2,
+            'charset' => 'UTF-8',
+            'preferredMessageSize' => 10240,
+            'maximumRecordSize' => 10240,
+        ],
+    ],
     'OPAC' => [
         'fullname' => 'OPAC SBN',
         'instance' => 'OPAC',
@@ -76,7 +89,7 @@ return [
         'fullname' => 'SUDOC',
         'instance' => 'SUDOC',
         'dsn' => 'yaz://carmin.sudoc.abes.fr:210/abes-z39-public',
-        'format' => 'UNIMARC',
+        'format' => 'MARC21',
         'elementset' => 'F',
         'options' => [
             'protocol' => 2,
@@ -129,6 +142,19 @@ return [
             'maximumRecordSize' => 10240,
         ],
     ],
+    'RUZ' => [
+        'fullname' => 'Knižnica Ružinov',
+        'instance' => 'RUZ',
+        'dsn' => 'yaz://arl1.library.sk:8887/ruz_un_cat',
+        'format' => 'UNIMARC',
+        'elementset' => 'F',
+        'options' => [
+            'protocol' => 2,
+            'charset' => 'WINDOWS-1250',
+        ],
+    ],
+
+
 
     /**
      * Address: ariane2.ulaval.ca

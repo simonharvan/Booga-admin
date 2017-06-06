@@ -1,0 +1,22 @@
+{
+  "name": "devfactory/media",
+  "description": "Laravel package for saving uploaded files and linking them with models",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "DevFactory Sarl",
+      "email": "developer@devfactory.ch"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/support": "~5.0",
+    "that0n3guy/transliteration": "2.0.x"
+  },
+  "autoload": {
+    "psr-4": {
+      "Devfactory\\Media\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
+}
