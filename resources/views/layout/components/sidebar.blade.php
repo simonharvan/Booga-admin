@@ -23,7 +23,7 @@
                     <span>Books</span>
                 </a>
             </li>
-            <li class="{{ isActiveRoute('admin.books.index') }}">
+            <li class="{{ isActiveRoute('admin.quizzes.index') }}">
                 <a href="{{ route('admin.quizzes.index') }}">
                     <i class="fa fa-question"></i>
                     <span>Quizzes</span>

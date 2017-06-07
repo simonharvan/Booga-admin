@@ -387,6 +387,7 @@ class ComposerStaticInitaefb656cdab7ddda8717eeae27a51f9b
         'BookTypeAddColumnImageUrl' => __DIR__ . '/../..' . '/database/migrations/2017_05_31_130448_book_type_add_column_image_url.php',
         'BookTypes' => __DIR__ . '/../..' . '/database/migrations/2017_03_19_135625_book_types.php',
         'Borrowing' => __DIR__ . '/../..' . '/database/migrations/2017_04_01_171551_Borrowing.php',
+        'ChangeColumnToTextQuizzes' => __DIR__ . '/../..' . '/database/migrations/2017_06_06_141428_change_column_to_text_quizzes.php',
         'CreateAdminsLog' => __DIR__ . '/../..' . '/database/migrations/2017_04_01_191657_create_admins_log.php',
         'CreateAdminsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_admins_table.php',
         'CreateAvatar' => __DIR__ . '/../..' . '/database/migrations/2017_04_01_190020_create_avatar.php',
