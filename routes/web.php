@@ -166,7 +166,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
         });
 
         Route::group(['prefix' => 'profile','namespace' => 'Profile'], function () {
-            Route::get('/edit', 'ProfileController@index')->name('admin.profile.index');
+            Route::get('/edit', 'ProfileController@edit')->name('admin.profile.edit');
             Route::get('/{id}/detail', 'ProfileController@detail')->name('admin.profile.detail');
         });
     });

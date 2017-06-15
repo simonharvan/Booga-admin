@@ -26,7 +26,7 @@ class ProfileController extends Controller
 
         $badgeTypes = AdminBadgeType::all();
 
-        return view('pages.profile.index', [
+        return view('pages.profile.edit', [
             'user' => $user,
             'badgeTypes' => $badgeTypes,
             'adminBadges' => $adminBadges
