@@ -50,7 +50,7 @@ class AdminsController extends Controller
             return redirect()->route('admin.dashboard.index');
         }
 
-        return view('pages.avatars.create');
+        return view('pages.admins.create');
     }
 
     public function store(AdminAddRequest $request)
