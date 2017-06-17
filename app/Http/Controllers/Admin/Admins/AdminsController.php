@@ -65,7 +65,11 @@ class AdminsController extends Controller
             $admin->password = Hash::make($request->password);
             $admin->email = $request->email;
             $admin->points = 0;
-            $admin->superadmin = $request->superadmin;
+            if ($request->superadmin == "true") {
+                $admin->superadmin = true;
+            } else {
+                $admin->superadmin = false;
+            }
             $admin->save();
 
             if ($request->hasFile('profile_photo')) {
