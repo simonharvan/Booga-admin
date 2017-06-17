@@ -39,7 +39,7 @@
                     <div class="col-xs-12 checkbox">
                         <label>
                             <input class="checkbox" type="checkbox" name="superadmin"
-                                   value="true" @php
+                                   value="true" disabled @php
                                 if ($user->superadmin) {
                          echo "checked";
                          } @endphp> Super admin

@@ -35,8 +35,9 @@
                         <input class="checkbox" type="checkbox" name="superadmin"
                                value="true" disabled @php
                             if ($user->superadmin) {
-                     echo "checked";
-                     } @endphp> Super admin
+                                echo "checked";
+                            } @endphp
+                        > Super admin
                     </label>
                 </div>
             </div>

@@ -28,6 +28,10 @@ class AdminsController extends Controller
 
     public function index()
     {
+        if (auth()->user()->superadmin == 0) {
+            return redirect()->route('admin.dashboard.index');
+        }
+
         $admins = Admin::with(['media'])->paginate(10);
 
         $currentPage = $admins->currentPage();
@@ -42,11 +46,19 @@ class AdminsController extends Controller
 
     public function create()
     {
+        if (auth()->user()->superadmin == 0) {
+            return redirect()->route('admin.dashboard.index');
+        }
+
         return view('pages.avatars.create');
     }
 
     public function store(AdminAddRequest $request)
     {
+        if (auth()->user()->superadmin == 0) {
+            return redirect()->route('admin.dashboard.index');
+        }
+
         try {
             $admin = new Admin;
             $admin->name = $request->name;
@@ -70,6 +82,9 @@ class AdminsController extends Controller
 
     public function edit($id)
     {
+        if (auth()->user()->superadmin == 0) {
+            return redirect()->route('admin.dashboard.index');
+        }
 
         $admin = Admin::query()->find($id);
 
@@ -80,6 +95,10 @@ class AdminsController extends Controller
 
     public function update(AdminUpdateRequest $request, $id)
     {
+        $auth = auth()->user();
+        if ($auth->superadmin == 0 && $auth->id != $id) {
+            return redirect()->route('admin.dashboard.index');
+        }
 
         $admin = Admin::query()->find($id);
 
@@ -88,9 +107,10 @@ class AdminsController extends Controller
         if ($request->password !== null) {
             $admin->password = Hash::make($request->password);
         }
+
         if ($request->superadmin == "true") {
             $admin->superadmin = true;
-        }else {
+        } else {
             $admin->superadmin = false;
         }
 
@@ -107,6 +127,9 @@ class AdminsController extends Controller
 
     public function destroy($id)
     {
+        if (auth()->user()->superadmin == 0) {
+            return redirect()->route('admin.dashboard.index');
+        }
 
         $admin = Admin::query()->find($id);
         $admin->delete();
