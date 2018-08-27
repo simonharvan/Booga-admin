@@ -168,11 +168,11 @@ return [
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
-        Medlib\Yaz\Providers\YazServiceProvider::class,
-        Medlib\MarcXML\Providers\ParserServiceProvider::class,
+//        Medlib\Yaz\Providers\YazServiceProvider::class,
+//        Medlib\MarcXML\Providers\ParserServiceProvider::class,
         Devfactory\Media\MediaServiceProvider::class,
         That0n3guy\Transliteration\TransliterationServiceProvider::class,
-        Yajra\Datatables\DatatablesServiceProvider::class,
+//        Yajra\Datatables\DatatablesServiceProvider::class,
 
 
         /*

@@ -32,6 +32,7 @@ class AdminTest extends TestCase
         $admin->password = Hash::make("12345");
         $admin->email = "simon@harvan.sk";
         $admin->points = 0;
+        $admin->superadmin = 1;
         $admin->save();
 
         $admin = Admin::all()->where("email", "=", "simon@harvan.sk");
@@ -55,12 +56,16 @@ class AdminTest extends TestCase
     {
         Auth::attempt(["email" => "simon@harvan.sk", "password" => "12345"]);
 
-        $response = $this->post(route('admin.admins.store', ["name" => "Testik test", "password" => "123456", "email" => "testik@testik.sk"]));
+        $response = $this->post(route('admin.admins.store', ["name" => "Testik test", "password" => "123456", "email" => "testik@testik.sk", "superadmin" => "true"]));
 
-
+	    $admin = Admin::query()->where("email", "=", "testik@testik.sk")->first();
+	    $this->assertTrue($admin->superadmin);
+	    $this->assertTrue($admin->points == 0);
         $response->assertSee("Redirecting");
         $response->assertStatus(302);
     }
+
+
 
     public function testAuth()
     {

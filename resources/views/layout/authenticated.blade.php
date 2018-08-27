@@ -2,6 +2,7 @@
 
 @section('core_content')
     <div class="wrapper">
+
         @include('layout.components.header')
         <!-- Left side column. contains the logo and sidebar -->
         @include('layout.components.sidebar')

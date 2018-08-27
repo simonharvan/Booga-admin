@@ -114,7 +114,7 @@ class RealLibraryController extends Controller
             'protocol' => 2,
             'charset' => 'UTF-8',
           ])->where($query)
-            ->all(YazRecords::TYPE_XML, "UNIMARC");
+            ->all(YazRecords::TYPE_XML);
         if (!$record->fails()){
             return response('Library found', 200);
         }else {

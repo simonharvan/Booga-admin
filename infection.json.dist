@@ -1,0 +1,16 @@
+{
+    "timeout": 10,
+    "source": {
+        "directories": [
+            "app/Http/Controllers"
+        ]
+    },
+    "logs": {
+        "text": "tmp\/mutation"
+    },
+    "mutators": {
+        "@default": true,
+        "@function_signature": false
+    }
+}
+

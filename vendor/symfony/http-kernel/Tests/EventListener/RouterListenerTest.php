@@ -24,6 +24,7 @@ use Symfony\Component\HttpKernel\EventListener\ValidateRequestListener;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\Routing\Exception\NoConfigurationException;
 use Symfony\Component\Routing\RequestContext;
 
 class RouterListenerTest extends TestCase
@@ -41,14 +42,14 @@ class RouterListenerTest extends TestCase
     public function testPort($defaultHttpPort, $defaultHttpsPort, $uri, $expectedHttpPort, $expectedHttpsPort)
     {
         $urlMatcher = $this->getMockBuilder('Symfony\Component\Routing\Matcher\UrlMatcherInterface')
-                             ->disableOriginalConstructor()
-                             ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
         $context = new RequestContext();
         $context->setHttpPort($defaultHttpPort);
         $context->setHttpsPort($defaultHttpsPort);
         $urlMatcher->expects($this->any())
-                     ->method('getContext')
-                     ->will($this->returnValue($context));
+            ->method('getContext')
+            ->will($this->returnValue($context));
 
         $listener = new RouterListener($urlMatcher, $this->requestStack);
         $event = $this->createGetResponseEventForUri($uri);
@@ -141,13 +142,13 @@ class RouterListenerTest extends TestCase
     {
         $requestMatcher = $this->getMockBuilder('Symfony\Component\Routing\Matcher\RequestMatcherInterface')->getMock();
         $requestMatcher->expects($this->once())
-          ->method('matchRequest')
-          ->will($this->returnValue($parameter));
+            ->method('matchRequest')
+            ->will($this->returnValue($parameter));
 
         $logger = $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
         $logger->expects($this->once())
-          ->method('info')
-          ->with($this->equalTo($log), $this->equalTo($parameters));
+            ->method('info')
+            ->with($this->equalTo($log), $this->equalTo($parameters));
 
         $kernel = $this->getMockBuilder('Symfony\Component\HttpKernel\HttpKernelInterface')->getMock();
         $request = Request::create('http://localhost/');
@@ -184,5 +185,42 @@ class RouterListenerTest extends TestCase
         $request->headers->set('host', '###');
         $response = $kernel->handle($request);
         $this->assertSame(400, $response->getStatusCode());
+    }
+
+    public function testNoRoutingConfigurationResponse()
+    {
+        $requestStack = new RequestStack();
+
+        $requestMatcher = $this->getMockBuilder('Symfony\Component\Routing\Matcher\RequestMatcherInterface')->getMock();
+        $requestMatcher
+            ->expects($this->once())
+            ->method('matchRequest')
+            ->willThrowException(new NoConfigurationException())
+        ;
+
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addSubscriber(new RouterListener($requestMatcher, $requestStack, new RequestContext()));
+
+        $kernel = new HttpKernel($dispatcher, new ControllerResolver(), $requestStack, new ArgumentResolver());
+
+        $request = Request::create('http://localhost/');
+        $response = $kernel->handle($request);
+        $this->assertSame(404, $response->getStatusCode());
+        $this->assertContains('Welcome', $response->getContent());
+    }
+
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     */
+    public function testRequestWithBadHost()
+    {
+        $kernel = $this->getMockBuilder('Symfony\Component\HttpKernel\HttpKernelInterface')->getMock();
+        $request = Request::create('http://bad host %22/');
+        $event = new GetResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
+
+        $requestMatcher = $this->getMockBuilder('Symfony\Component\Routing\Matcher\RequestMatcherInterface')->getMock();
+
+        $listener = new RouterListener($requestMatcher, $this->requestStack, new RequestContext());
+        $listener->onKernelRequest($event);
     }
 }

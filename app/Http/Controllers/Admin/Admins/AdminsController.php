@@ -28,7 +28,7 @@ class AdminsController extends Controller
 
     public function index()
     {
-        if (auth()->user()->superadmin == 0) {
+        if (!auth()->user()->superadmin) {
             return redirect()->route('admin.dashboard.index');
         }
 
@@ -55,7 +55,7 @@ class AdminsController extends Controller
 
     public function store(AdminAddRequest $request)
     {
-        if (auth()->user()->superadmin == 0) {
+        if (!auth()->user()->superadmin) {
             return redirect()->route('admin.dashboard.index');
         }
 
@@ -86,7 +86,7 @@ class AdminsController extends Controller
 
     public function edit($id)
     {
-        if (auth()->user()->superadmin == 0) {
+        if (!auth()->user()->superadmin) {
             return redirect()->route('admin.dashboard.index');
         }
 
@@ -100,7 +100,7 @@ class AdminsController extends Controller
     public function update(AdminUpdateRequest $request, $id)
     {
         $auth = auth()->user();
-        if ($auth->superadmin == 0 && $auth->id != $id) {
+        if (!$auth->superadmin && $auth->id != $id) {
             return redirect()->route('admin.dashboard.index');
         }
 
@@ -131,7 +131,7 @@ class AdminsController extends Controller
 
     public function destroy($id)
     {
-        if (auth()->user()->superadmin == 0) {
+        if (!auth()->user()->superadmin) {
             return redirect()->route('admin.dashboard.index');
         }
 

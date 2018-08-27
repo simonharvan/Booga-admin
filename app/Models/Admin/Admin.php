@@ -17,6 +17,7 @@ class Admin extends Authenticatable
 
     protected $table = 'Admin';
     protected $fillable = ['name', 'email', 'password'];
+    protected $casts = ['superadmin'=> 'boolean'];
     protected $hidden = ['password', 'remember_token'];
     protected $dates = ['deleted_at'];
     protected $with = ['media'];

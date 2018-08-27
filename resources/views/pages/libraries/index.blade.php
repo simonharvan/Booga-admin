@@ -34,7 +34,7 @@
                 </thead>
                 <tbody>
                 @foreach($libraries as $library)
-                    <tr data-href="{{ route('admin.admins.edit', ['id' => $library->id]) }}">
+                    <tr data-href="{{ route('admin.libraries.edit', ['id' => $library->id]) }}">
                         <td>{{ $library->id }}</td>
                         <td>{{ $library->name }}</td>
                         <td>{{ $library->url }}</td>

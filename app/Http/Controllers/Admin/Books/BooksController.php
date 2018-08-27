@@ -142,6 +142,7 @@ class BooksController extends Controller
         $realLibrary = RealLibrary::findOrFail($libraryId);
 
         $records = YazQuery::create()
+	        ->from(SUDOC)
             ->fromUrl($realLibrary->url, $realLibrary->port, $realLibrary->database_name)
             ->where($query)
             ->limit(0, 10)
@@ -158,33 +159,6 @@ class BooksController extends Controller
         } else {
             return response("false", 404);
         }
-//        $query = "@or @or @attr 1=4 ". $query ." @attr 1=1003 ". $query ." @attr 1=1016 ". $query;
-//
-//        $connection = yaz_connect("arl1.library.sk:8887/ruz_un_cat");
-//        yaz_element($connection, $elementset);
-//        yaz_search($connection, 'rpn', $query);
-//        yaz_wait();
-//        $error = yaz_error($connection);
-//        $errorno = yaz_errno($connection);
-//
-//        $records = [];
-//        if ($error == "") {
-//            yaz_present($connection);
-//            $hits = yaz_hits($connection);
-//            for ($i = 0; $i < $hits; ++$i) {
-//                $xml = yaz_record($connection, $i, "string");
-//                array_push($records, $xml);
-//            }
-//        }
-//
-//
-//        dd($records);
-//
-//        if (count($records) > 0) {
-//            return response("true", 200);
-//        } else {
-//            return response("false", 404);
-//        }
     }
 
     /**

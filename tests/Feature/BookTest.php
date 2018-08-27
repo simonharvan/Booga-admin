@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Admin\Admin;
+use App\Models\Book\BookType;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -21,7 +23,8 @@ class BookTest extends TestCase
         $response = $this->get(route('admin.books.index'));
 
         $response->assertStatus(200);
-        $this->assertTrue(true);
+        $response->assertSee('Books');
+
     }
 
     public function testCreate()
@@ -30,15 +33,34 @@ class BookTest extends TestCase
         $response = $this->get(route('admin.books.create'));
 
         $response->assertStatus(200);
-        $this->assertTrue(true);
+	    $response->assertSee('Create book');
+
     }
 
     public function testStore()
     {
         Auth::attempt(["email" => "simon@harvan.sk", "password" => "12345"]);
-        $response = $this->get(route('admin.books.create'),["name" => "Harry Potter", "author" => "J.K.Rowling"]);
-        $response->assertStatus(200);
-        $this->assertTrue(true);
+	    $admin = Admin::query()->where("email", "=", "simon@harvan.sk")->first();
+	    $points = $admin->points;
+        $response = $this->post(route('admin.books.create'),["name" => "Test Test",
+                                                             "author" => "Test test test",
+                                                             "isbn" => "1234567890",
+                                                             "year_published" => "1999",
+                                                             "focus_level" => "4",
+                                                             "energy" => "20",
+                                                             "time_clearing" => "20",
+                                                             "genre" => "1"
+        ,"cover_photo_url" => "https://www.slovakrail.sk/fileadmin/templates/images/logo_zssk.png"]);
+
+
+	    $response->assertStatus(302);
+
+	    $book = BookType::query()->where('name','=','Test Test')->first();
+
+	    $this->assertTrue($book->author_name == 'Test test test');
+
+	    $admin = Admin::query()->where("email", "=", "simon@harvan.sk")->first();
+	    $this->assertTrue($admin->points == $points + 5);
     }
 
 
@@ -46,9 +68,24 @@ class BookTest extends TestCase
     public function testEdit()
     {
         Auth::attempt(["email" => "simon@harvan.sk", "password" => "12345"]);
-        $response = $this->get(route('admin.books.create', []));
+        $response = $this->get(route('admin.books.create'));
 
         $response->assertStatus(200);
-        $this->assertTrue(true);
+
+    }
+
+    public function testDelete()
+    {
+	    Auth::attempt(["email" => "simon@harvan.sk", "password" => "12345"]);
+
+
+	    $book = BookType::query()->where('name','=','Test Test')->first();
+
+
+	    $response = $this->get(route('admin.books.delete', $book->id));
+
+
+	    $response->assertStatus(302);
+	    $response->assertDontSee("Test Test");
     }
 }

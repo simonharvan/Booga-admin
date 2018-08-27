@@ -40,7 +40,7 @@ class LevelsController extends Controller
 
         $level->save();
 
-        return redirect()->route('admin.levels.index');
+        return redirect()->route('admin.levels.index', $level);
     }
 
     public function edit($id) {

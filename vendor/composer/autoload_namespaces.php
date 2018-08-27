@@ -12,7 +12,4 @@ return array(
     'JakubOnderka\\PhpConsoleHighlighter' => array($vendorDir . '/jakub-onderka/php-console-highlighter/src'),
     'JakubOnderka\\PhpConsoleColor' => array($vendorDir . '/jakub-onderka/php-console-color/src'),
     'ForceUTF8\\' => array($vendorDir . '/neitanod/forceutf8/src'),
-    'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib'),
-    'Danmichaelo\\QuiteSimpleXMLElement' => array($vendorDir . '/danmichaelo/quitesimplexmlelement/src'),
-    'Barryvdh' => array($vendorDir . '/barryvdh/reflection-docblock/src'),
 );

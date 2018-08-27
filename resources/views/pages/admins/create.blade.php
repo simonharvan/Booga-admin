@@ -39,7 +39,7 @@
                     </div>
                     <div class="col-xs-12 checkbox">
                         <label>
-                            <input class="checkbox" type="checkbox" name="super_admin"
+                            <input class="checkbox" type="checkbox" name="superadmin"
                                    value="true"> Super admin
                         </label>
                     </div>

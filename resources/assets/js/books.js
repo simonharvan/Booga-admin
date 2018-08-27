@@ -16,6 +16,9 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (data) {
                     response(data['result']);
+                },
+                fail: function (data) {
+                    alert('Failed connection');
                 }
             });
         },
